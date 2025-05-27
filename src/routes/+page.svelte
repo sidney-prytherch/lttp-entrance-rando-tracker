@@ -82,8 +82,10 @@
 	let entranceHasSpecialComesFrom = $derived(
 		data.entranceCoords[Math.max(0, hoveredEntranceIndex)].specialComesFrom.size > 0
 	);
-	// let entranceZoomSpanComesFrom = $derived(
-	// 	data.entranceCoords[Math.max(0, hoveredEntranceIndex)].specialComesFrom.values().toArray()
+	let entranceZoomSpanComesFrom = $derived(
+		data.entranceCoords[Math.max(0, hoveredEntranceIndex)] ? 
+			data.entranceCoords[Math.max(0, hoveredEntranceIndex)].specialComesFrom.values() : ['']
+	)
 	// 	// .reduce((prevVal, currentVal) => `${prevVal}, ${currentVal}`)
 	// 	// : data.entranceCoords[Math.max(0, hoveredEntranceIndex)].comesFrom
 	// );
@@ -117,9 +119,6 @@
 
 	const downloadSaveFile = () => {
 		const link = document.createElement('a');
-		const modifiedEntrances = data.entranceCoords.map((it) => {
-			return { ...it, specialComesFrom: it.specialComesFrom.values().toArray() };
-		});
 		const saveData: SaveData = {
 			inventory: JSON.parse(JSON.stringify(inventory)),
 			isCrossed,
@@ -1990,7 +1989,7 @@
 					>
 					<!-- <div class="flex-col"> -->
 					<ul class="exitList">
-						{#each data.entranceCoords[Math.max(0, hoveredEntranceIndex)].specialComesFrom.values().toArray() as exit}
+						{#each entranceZoomSpanComesFrom as exit}
 							<li>{exit}</li>
 						{/each}
 					</ul>
