@@ -1440,6 +1440,9 @@
 								(inventory['misery mire medallion'] === 3 && inventory['quake'] === 1)
 							);
 						}
+						if (itemNameAndNum[0] === 'ganon tower logic') {
+							return inventory['ganon crystals'] <= inventory['special crystals'] + inventory['boring crystals'];
+						}
 
 						return inventory[itemNameAndNum[0]] >= Number.parseInt(itemNameAndNum[1]);
 					}

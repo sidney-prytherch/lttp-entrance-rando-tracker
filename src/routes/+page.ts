@@ -241,8 +241,8 @@ export const load: PageLoad = ({ params }) => {
 		},
 		'Dark Death Mountain Upper': {
 			"regionName": "Dark Death Mountain Upper",
-			"fullyAccessible": ["Ganons Tower", "Superbunny Cave (Top)"],
-			"exitToRegionButCantEnterWithoutReq": { "Hookshot Cave": [["moon pearl", "progressive glove~1"]] },
+			"fullyAccessible": ["Superbunny Cave (Top)"],
+			"exitToRegionButCantEnterWithoutReq": { "Hookshot Cave": [["moon pearl", "progressive glove~1"]], "Ganons Tower": [["ganon tower logic~true"]] },
 			"connectsToRegionWithReq": { "Dark Death Mountain Lower West": [[]], "Dark Death Mountain Lower East": [[]], "Tower of Hera Region": [["mirror"]], "Paradox Cave (Top) Region": [["mirror"]] }
 		},
 		'Dark Death Mountain Lower East': {
