@@ -951,12 +951,9 @@
 		let spawnEntrance = data.entranceCoords.find((it) => it.name === 'Links House');
 		let connectorExit = data.connectorCoords.find((it) => it.name === 'Links House Exit');
 		if (spawnEntrance && connectorExit) {
-			for (let entrance of data.entranceCoords) {
-				if (entrance.specialComesFrom.has(connectorExit.name)) {
-					entrance.specialComesFrom.delete(connectorExit.name);
-				}
-			}
+			spawnEntrance.goesToSelectedOption = goToOptions[0]
 			spawnEntrance.specialComesFrom.add(connectorExit.name);
+			spawnEntrance.goesTo = 'Links House'
 			connectorExit.goesTo = spawnEntrance.name;
 		}
 
@@ -1520,7 +1517,7 @@
 			} else if (connectedRegionName === 'Ice Palace Region') {
 				optionalPathString =
 					optionalPathString + ' (via Dark World warp spot near Capacity Upgrade Fairy)';
-			} else if (connectedRegionName === 'Dark Death Mountain Lower West') {
+			} else if (regionName === "Death Mountain Lower West" && connectedRegionName === 'Dark Death Mountain Lower West') {
 				optionalPathString = optionalPathString + ' (via Dark World warp spot near Spectacle Rock)';
 			} else if (connectedRegionName === 'Turtle Rock Shell') {
 				optionalPathString = optionalPathString + ' (via Dark World warp that goes to Turtle Rock)';
