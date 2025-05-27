@@ -82,11 +82,11 @@
 	let entranceHasSpecialComesFrom = $derived(
 		data.entranceCoords[Math.max(0, hoveredEntranceIndex)].specialComesFrom.size > 0
 	);
-	let entranceZoomSpanComesFrom = $derived(
-		data.entranceCoords[Math.max(0, hoveredEntranceIndex)].specialComesFrom.values().toArray()
-		// .reduce((prevVal, currentVal) => `${prevVal}, ${currentVal}`)
-		// : data.entranceCoords[Math.max(0, hoveredEntranceIndex)].comesFrom
-	);
+	// let entranceZoomSpanComesFrom = $derived(
+	// 	data.entranceCoords[Math.max(0, hoveredEntranceIndex)].specialComesFrom.values().toArray()
+	// 	// .reduce((prevVal, currentVal) => `${prevVal}, ${currentVal}`)
+	// 	// : data.entranceCoords[Math.max(0, hoveredEntranceIndex)].comesFrom
+	// );
 	let entranceRequiredItems = $derived(
 		Object.entries(data.entranceCoords[Math.max(0, hoveredEntranceIndex)].requires).filter(
 			(it) => it[1]
@@ -1990,7 +1990,7 @@
 					>
 					<!-- <div class="flex-col"> -->
 					<ul class="exitList">
-						{#each entranceZoomSpanComesFrom as exit}
+						{#each data.entranceCoords[Math.max(0, hoveredEntranceIndex)].specialComesFrom.values().toArray() as exit}
 							<li>{exit}</li>
 						{/each}
 					</ul>
