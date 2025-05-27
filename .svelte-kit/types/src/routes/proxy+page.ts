@@ -1,8 +1,9 @@
+// @ts-nocheck
 import type { PageLoad } from './$types';
 
 export const prerender = true;
 
-export const load: PageLoad = ({ params }) => {
+export const load = ({ params }: Parameters<PageLoad>[0]) => {
 	let regions: {
 		[key: string]: {
 			regionName: string,
