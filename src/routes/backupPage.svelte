@@ -1606,6 +1606,7 @@
 		enterable: boolean;
 		previousCoordsInPath: number[];
 		shortestPathUsedMirrorToArrive: boolean;
+		routes: { [key: string]: { [key: string]: PathNew } };
 		connections: {
 			[key: string]: {
 				fromDoor: Door;
@@ -1626,6 +1627,7 @@
 		for (let regionName in data.regions) {
 			doors[regionName] = {
 				coords: data.regions[regionName].coords || [],
+				routes: {},
 				pathFromSpawn: [],
 				shortestPathVia: '',
 				distanceFromSpawn: 0,
@@ -1644,44 +1646,42 @@
 				pathFromSpawn: [],
 				shortestPathVia: '',
 				distanceFromSpawn: 0,
+				routes: {
+					'Links House S&Q': {},
+					'Sanctuary S&Q': {},
+					'Old Man House S&Q (Left exit)': {},
+					'Old Man House S&Q (Right exit)': {}
+				},
 				name: entranceName,
 				connections: {},
 				previousCoordsInPath: []
 			};
 		}
 		console.log('regions and entrances doors initialized');
-
-		// let fluteDrops = Object.values(data.regions).filter(it => it.isFluteDrop)
-		let warpSpots = Object.values(data.regions).filter(it => it.isWarpSpot)
-		let warpSpotLightWorldRegionNames = warpSpots.filter(it => it.isInLightWorld)
-		let warpSpotDarkWorldRegionNames = warpSpots.filter(it => !it.isInLightWorld)
-
+		// for (let connectorName in data.connectorCoords) {
+		// 	doors[connectorName] = {
+		// 		coords: null,
+		// 		name: connectorName,
+		// 		connections: {}
+		// 	};
+		// }
+		// for (let dungeonName in data.dungeonCoords) {
+		// 	doors[dungeonName] = {
+		// 		coords: null,
+		// 		name: dungeonName,
+		// 		connections: {}
+		// 	};
+		// }
 		for (let regionName in data.regions) {
 			let door = doors[regionName];
 			if (!door) continue;
-
-
-			if (data.regions[regionName].isInLightWorld && inventory && inventory.flute === 1) {
-				let skyRegionName = "I'm flyin' Jack"
-				let skyDoor = doors[skyRegionName]
-				door.connections[skyRegionName] = {
-					connectionExplanation: `distance 0: ${regionName} to ${skyRegionName}`,// via the overworld`,
-					lineStyle: LineStyle.DOTTED,
-					distance: 0,
-					mirrorUsed: false,
-					fromDoor: door,
-					toDoor: skyDoor,
-					internalExit: null
-				};
-			}
-
 			for (let entranceName of data.regions[regionName].fullyAccessible) {
 				let toEntrance = data.entranceCoords[entranceName];
 				if (!toEntrance) continue;
 				let toDoor = doors[entranceName];
 				if (!toDoor) continue;
 				door.connections[entranceName] = {
-					connectionExplanation: `distance -1: ${door.name} to ${toDoor.name} | Go to '${entranceName}'`,// via the overworld`,
+					connectionExplanation: `Go to '${entranceName}'`,// via the overworld`,
 					lineStyle: LineStyle.STRAIGHT,
 					distance: -1,
 					mirrorUsed: false,
@@ -1736,7 +1736,7 @@
 				let toEntrance = data.entranceCoords[entranceName];
 				if (!toEntrance) continue;
 				door.connections[entranceName] = {
-					connectionExplanation: `distance -1: ${door.name} to ${toDoor.name} | Go to '${entranceName}'`,//`In the overworld region '${regionName}' go to '${entranceName}'`,
+					connectionExplanation: `Go to '${entranceName}'`,//`In the overworld region '${regionName}' go to '${entranceName}'`,
 					lineStyle: LineStyle.STRAIGHT,
 					distance: -1,
 					mirrorUsed: false,
@@ -1817,17 +1817,14 @@
 				let toDoor = doors[connectedRegionName];
 				if (!toDoor) continue;
 
-				let mirrorNecessary = (!data.regions[regionName].isInLightWorld && connectedRegion.isInLightWorld && !connectedRegion.isFluteDrop)
+				let mirrorNecessary = (!data.regions[regionName].isInLightWorld && connectedRegion.isInLightWorld)
 
 				if (mirrorNecessary) console.log(`${regionName} needs mirror to get to ${connectedRegionName}`)
 
-				let isFlying = connectedRegion.isFluteDrop
-				let isFlute = data.regions[regionName].isFluteDrop
-				let isWarp =  data.regions[regionName].isWarpSpot && !data.regions[regionName].isInLightWorld
-				let isVeryShortDistance = isFlying || isFlute || isWarp || mirrorNecessary;
-				let isShortDistance = isVeryShortDistance || !data.regions[regionName].isMajorRegion
-				let lineStyle = isVeryShortDistance ? LineStyle.DOTTED : LineStyle.STRAIGHT;
-				let distance = isShortDistance ? 0 : 800;
+				let isFlute = connectedRegionName.indexOf("Flute Drop") !== -1
+				let isWarp =  connectedRegionName.indexOf(" - Dark World") !== -1
+				let isShortDistance = isFlute || isWarp || mirrorNecessary
+				let lineStyle = isShortDistance ? LineStyle.DOTTED : LineStyle.STRAIGHT;
 				let connectionExplanation = isFlute ? `Use the flute to go to '${connectedRegionName}'` : 
 					isWarp ? `Warp to the Dark World at '${regionName}'` :
 					mirrorNecessary ? `Use the mirror to go from the Dark World to '${connectedRegionName}' in the light world` : ''
@@ -1835,10 +1832,10 @@
 
 
 				door.connections[connectedRegionName] = {
-					connectionExplanation: `distance ${distance}: ${door.name} to ${toDoor.name} | ` + connectionExplanation,//`In the overworld region '${regionName}' go to connected region '${connectedRegionName}'${optionalPathString}`,
+					connectionExplanation,//`In the overworld region '${regionName}' go to connected region '${connectedRegionName}'${optionalPathString}`,
 					lineStyle,
 					mirrorUsed: mirrorNecessary,
-					distance: distance,
+					distance: .0001,
 					fromDoor: door,
 					toDoor,
 					internalExit: null
@@ -1853,10 +1850,10 @@
 			let regionDoor = doors[data.entranceToRegionMap[entranceName]];
 			if (!regionDoor) continue;
 			door.connections[data.entranceToRegionMap[entranceName]] = {
-				connectionExplanation: `distance 0: ${door.name} to ${regionDoor.name}`, //`ignore: enter region '${data.entranceToRegionMap[entranceName]}' from '${entranceName}'`,
+				connectionExplanation: 'leave exit to enter region: .0001', //`ignore: enter region '${data.entranceToRegionMap[entranceName]}' from '${entranceName}'`,
 				lineStyle: LineStyle.STRAIGHT,
 				mirrorUsed: false,
-				distance: 0,
+				distance: .0001,
 				fromDoor: door,
 				toDoor: regionDoor,
 				internalExit: ''
@@ -1865,7 +1862,7 @@
 				let toDoor = doors[entranceData.goesTo];
 				if (!toDoor) continue;
 				door.connections[entranceData.goesTo] = {
-					connectionExplanation: `distance .0001: ${door.name} to ${toDoor.name} | Enter '${entranceName}' and exit to get to overworld location '${entranceData.goesTo}'`,// in region '${data.entranceToRegionMap[entranceData.goesTo]}'`,
+					connectionExplanation: `Enter '${entranceName}' and exit to get to overworld location '${entranceData.goesTo}'`,// in region '${data.entranceToRegionMap[entranceData.goesTo]}'`,
 					lineStyle: LineStyle.DASHED,
 					mirrorUsed: false,
 					distance: .0001,
@@ -1890,7 +1887,7 @@
 					let toDoor = doors[reachableExit.goesTo];
 					if (!toDoor) continue;
 					door.connections[reachableExit.goesTo] = {
-						connectionExplanation: `distance 100: ${door.name} to ${toDoor.name} | Enter '${entranceName}' and exit at '${reachableExitName}' to get to overworld location '${reachableExit.goesTo}'`,// in region '${data.entranceToRegionMap[reachableExit.goesTo]}'${reachableExitName.indexOf('urtle') > -1 ? ' *TURTLE ROCK LOGIC NOT IMPLEMENTED - THIS STEP MAY BE IMPOSSIBLE - SORRY' : ''}`,
+						connectionExplanation: `Enter '${entranceName}' and exit at '${reachableExitName}' to get to overworld location '${reachableExit.goesTo}'`,// in region '${data.entranceToRegionMap[reachableExit.goesTo]}'${reachableExitName.indexOf('urtle') > -1 ? ' *TURTLE ROCK LOGIC NOT IMPLEMENTED - THIS STEP MAY BE IMPOSSIBLE - SORRY' : ''}`,
 						fromDoor: door,
 						lineStyle: LineStyle.DASHED,
 						mirrorUsed: false,
@@ -1924,7 +1921,7 @@
 					let toDoor = doors[reachableExit.goesTo];
 					if (!toDoor) continue;
 					door.connections[reachableExit.goesTo] = {
-						connectionExplanation: `distance 100: ${door.name} to ${toDoor.name} | Enter '${entranceName}' and exit at '${reachableExitName}' to get to overworld location '${reachableExit.goesTo}'`,// in region '${data.entranceToRegionMap[reachableExit.goesTo]}'`,
+						connectionExplanation: `Enter '${entranceName}' and exit at '${reachableExitName}' to get to overworld location '${reachableExit.goesTo}'`,// in region '${data.entranceToRegionMap[reachableExit.goesTo]}'`,
 						fromDoor: door,
 						lineStyle: LineStyle.DASHED,
 						mirrorUsed: false,
@@ -2048,11 +2045,6 @@
 					connectionDistance
 				}
 				let pathLength = currentNode.distanceFromSpawn + connectionDistance;
-				if (connection.connectionExplanation === "distance -1: Near the Dam to Dam | Go to 'Dam'") {
-					console.log((JSON.stringify(currentNode.pathFromSpawn)))
-					console.log(connectionDistance + " ~ " + pathLength + " ~ " + connection.connectionExplanation)
-					console.log("found it!")
-				}
 				if (pathLength < connectedNode.distanceFromSpawn) {
 					console.log({connectedNode: connectedNodeName, toBeReplaced: connectedNode.pathFromSpawn})
 					connectedNode.shortestPathUsedMirrorToArrive = connection.mirrorUsed
@@ -2060,7 +2052,7 @@
 					connectedNode.distanceFromSpawn = pathLength;
 					connectedNode.shortestPathVia = currentNode.name;
 					connectedNode.pathFromSpawn = JSON.parse(JSON.stringify(currentNode.pathFromSpawn));
-					connectedNode.pathFromSpawn.push(connectionDistance + " ~ " + pathLength + " ~ " + connection.connectionExplanation);
+					connectedNode.pathFromSpawn.push(connection.connectionExplanation);
 					if (connection.connectionExplanation !== '') {
 					}
 					if (connectedNode.coords.length > 0) {
