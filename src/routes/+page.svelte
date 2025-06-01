@@ -1901,7 +1901,7 @@
 						lineStyle: LineStyle.DASHED,
 						mirrorUsed: false,
 						mirrorCoords: [],
-						distance: reachableExitName.indexOf("urtle") > -1 ? 100 : 99999,
+						distance: reachableExitName.indexOf("urtle") === -1 ? 100 : 99999,
 						toDoor,
 						internalExit: reachableExitName
 					};
@@ -2088,9 +2088,25 @@
 							lineStyle: lineStyle
 						});
 					} else {
-						connectedNode.previousCoordsInPath = currentNode.coords.length > 0
+						let previousCoords = currentNode.coords.length > 0
 							? currentNode.coords
 							: currentNode.previousCoordsInPath
+						if (currentNode.name === "Lake Hylia Region" && connectedNodeName === "Waterfall of Wishing Region") {
+							// this shouldn't be hard coded - fix this later
+							connectedNode.pathFromSpawn.push("Use the water warp in Lake Hylia to get to the area near the Waterfall of Wishing")
+							connectedNode.pathFromSpawn.push({
+								e1: e1Coords,
+								e2: [1617, 1883],
+								lineStyle: LineStyle.STRAIGHT
+							});
+							connectedNode.pathFromSpawn.push({
+								e1: [1617, 1883],
+								e2: [1861, 406],
+								lineStyle: LineStyle.DOTTED
+							});
+							previousCoords =  [1861, 406]
+						}
+						connectedNode.previousCoordsInPath = previousCoords
 					}
 					// console.log({connectedNode: connectedNodeName, replacedBy: connectedNode.pathFromSpawn})
 				}

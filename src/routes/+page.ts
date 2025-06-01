@@ -328,7 +328,7 @@ export const load: PageLoad = ({ params }) => {
 				"Desert Fairy",
 			],
 			exitToRegionButCantEnterWithoutReq: {
-				"Sanctuary Grave": [["progressive glove~1"]],
+				
 			}
 		},
 		'Near the Dam': {
@@ -366,6 +366,7 @@ export const load: PageLoad = ({ params }) => {
 			],
 			exitToRegionButCantEnterWithoutReq: {
 				"Bonk Rock Cave": [["pegasus boots"]],
+				"Sanctuary Grave": [["progressive glove~1"]],
 			}
 		},
 		'Lake Hylia Region': {
@@ -385,7 +386,7 @@ export const load: PageLoad = ({ params }) => {
 			exitToRegionButCantEnterWithoutReq: {
 				"20 Rupee Cave": [["progressive glove~1"]],
 				"Ice Rod Cave": [["bombs"]],
-			}
+			},
 		},
 		'East Ruins': {
 			isInLightWorld: true,
