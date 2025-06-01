@@ -11,7 +11,8 @@ export const load: PageLoad = ({ params }) => {
 			coords?: number[],
 			isWarpSpot?: boolean,
 			isFluteDrop?: boolean,
-			isMajorRegion?: boolean
+			isMajorRegion?: boolean,
+			mirrorCoords?: {[key: string]: number[]}
 		}
 	} = {
 		"I'm flyin' Jack": {
@@ -19,7 +20,7 @@ export const load: PageLoad = ({ params }) => {
 			regionName: "I'm flyin' Jack",
 			fullyAccessible: [
 			],
-			connectsToRegionWithReq: { 
+			connectsToRegionWithReq: {
 				'Flute Drop - Death Mountain': [[]],
 				'Flute Drop - Potion Shop': [[]],
 				'Flute Drop - Kakariko': [[]],
@@ -28,7 +29,7 @@ export const load: PageLoad = ({ params }) => {
 				'Flute Drop - Desert': [[]],
 				'Flute Drop - Dam Region': [[]],
 				'Flute Drop - Lake Hylia': [[]]
-			 },
+			},
 			coords: [],
 			exitToRegionButCantEnterWithoutReq: {}
 		},
@@ -126,7 +127,7 @@ export const load: PageLoad = ({ params }) => {
 			regionName: "Warp Tile - Death Mountain Lower West",
 			fullyAccessible: [],
 			connectsToRegionWithReq: { 'Warp Tile - Death Mountain Lower West - Dark World': [[]] },
-			coords: [1156, 189],
+			coords: [1156, 220],
 			exitToRegionButCantEnterWithoutReq: {},
 			isWarpSpot: true
 		},
@@ -189,7 +190,7 @@ export const load: PageLoad = ({ params }) => {
 			regionName: "Warp Tile - Death Mountain Lower West - Dark World",
 			fullyAccessible: [],
 			connectsToRegionWithReq: { 'Dark Death Mountain Lower West': [[]] },
-			coords: [3221, 189],
+			coords: [3221, 220],
 			exitToRegionButCantEnterWithoutReq: {},
 			isWarpSpot: true
 		},
@@ -282,10 +283,10 @@ export const load: PageLoad = ({ params }) => {
 			isMajorRegion: true,
 			"regionName": "Kakariko",
 			connectsToRegionWithReq: {
-				'Links House Area' : [[]],
-				'Lost Woods' : [[]],
-				'Near the Sanctuary' : [[]],
-				'Hyrule Castle' : [[]],
+				'Links House Area': [[]],
+				'Lost Woods': [[]],
+				'Near the Sanctuary': [[]],
+				'Hyrule Castle': [[]],
 				'Warp Tile - Kakariko': [["magic hammer", "progressive glove~1"], ["progressive glove~2"]],
 			},
 			fullyAccessible: [
@@ -320,7 +321,7 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Desert Region",
 			connectsToRegionWithReq: {
 				"Desert Palace Entrance (South) Region": [["book of mudora"]],
-				'Near the Dam' : [[]],
+				'Near the Dam': [[]],
 			},
 			fullyAccessible: [
 				"Aginahs Cave",
@@ -335,9 +336,9 @@ export const load: PageLoad = ({ params }) => {
 			isMajorRegion: true,
 			"regionName": "Near the Dam",
 			connectsToRegionWithReq: {
-				'Links House Area' : [[]],
-				'Desert Region' : [[]],
-				'Lake Hylia Region' : [[]],
+				'Links House Area': [[]],
+				'Desert Region': [[]],
+				'Lake Hylia Region': [[]],
 				'Warp Tile - Dam Area': [["magic hammer", "progressive glove~1"]],
 			},
 			fullyAccessible: [
@@ -354,8 +355,8 @@ export const load: PageLoad = ({ params }) => {
 			isMajorRegion: true,
 			"regionName": "Near the Sanctuary",
 			connectsToRegionWithReq: {
-				'Kakariko' : [[]],
-				'Potion Shop Region' : [[]],
+				'Kakariko': [[]],
+				'Potion Shop Region': [[]],
 				"Kings Grave Region": [["pegasus boots", "progressive glove~2"]],
 			},
 			fullyAccessible: [
@@ -374,9 +375,9 @@ export const load: PageLoad = ({ params }) => {
 			connectsToRegionWithReq: {
 				"Waterfall of Wishing Region": [["flippers"]],
 				"Capacity Upgrade Region": [["flippers"]],
-				'Links House Area' : [[]],
-				'Near the Dam' : [[]],
-				'East Ruins' : [[]],
+				'Links House Area': [[]],
+				'Near the Dam': [[]],
+				'East Ruins': [[]],
 			},
 			fullyAccessible: [
 				"Good Bee Cave",
@@ -392,10 +393,10 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "East Ruins",
 			connectsToRegionWithReq: {
 				'Warp Tile - East Area': [["magic hammer", "progressive glove~1"]],
-				'Links House Area' : [[]],
-				'Lake Hylia Region' : [[]],
-				'Potion Shop Region' : [[]],
-				'Hyrule Castle' : [[]],
+				'Links House Area': [[]],
+				'Lake Hylia Region': [[]],
+				'Potion Shop Region': [[]],
+				'Hyrule Castle': [[]],
 			},
 			fullyAccessible: [
 				"Sahasrahlas Hut",
@@ -411,8 +412,8 @@ export const load: PageLoad = ({ params }) => {
 			isMajorRegion: true,
 			"regionName": "Potion Shop",
 			connectsToRegionWithReq: {
-				'Near the Sanctuary' : [[]],
-				'East Ruins' : [[]],
+				'Near the Sanctuary': [[]],
+				'East Ruins': [[]],
 				"Waterfall of Wishing Region": [["flippers", "progressive glove~1"]],
 			},
 			fullyAccessible: [
@@ -427,9 +428,9 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Hyrule Castle",
 			connectsToRegionWithReq: {
 				'Warp Spot - Hyrule Castle': [["agahnim~1"]],
-				'Links House Area' : [[]],
-				'Kakariko' : [[]],
-				'East Ruins' : [[]],
+				'Links House Area': [[]],
+				'Kakariko': [[]],
+				'East Ruins': [[]],
 			},
 			fullyAccessible: [
 				"Hyrule Castle Secret Entrance Drop",
@@ -501,7 +502,7 @@ export const load: PageLoad = ({ params }) => {
 			isInLightWorld: true,
 			"regionName": "Hyrule Castle Ledge",
 			"fullyAccessible": ["Hyrule Castle Entrance (West)", "Hyrule Castle Entrance (East)"],
-			"exitToRegionButCantEnterWithoutReq": { "Agahnims Tower": [["progressive sword~2"]] },
+			"exitToRegionButCantEnterWithoutReq": { "Agahnims Tower": [["progressive sword~2"], ["magic cape"]] },
 			"connectsToRegionWithReq": { "Hyrule Castle": [[]] }
 		},
 		'Tower of Hera Region': {
@@ -517,7 +518,7 @@ export const load: PageLoad = ({ params }) => {
 			isMajorRegion: true,
 			"regionName": "Waterfall of Wishing Region",
 			"fullyAccessible": ["Waterfall of Wishing"],
-			"connectsToRegionWithReq": { "Lake Hylia Region": [["flippers"]], 'Potion Shop Region' : [["flippers", "progressive glove~1"]] },
+			"connectsToRegionWithReq": { "Lake Hylia Region": [["flippers"]], 'Potion Shop Region': [["flippers", "progressive glove~1"]] },
 			"exitToRegionButCantEnterWithoutReq": {}
 		},
 		'Kings Grave Region': {
@@ -610,7 +611,10 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Skull Woods Final Area",
 			"fullyAccessible": ["Skull Woods Second Section Door (West)"],
 			"exitToRegionButCantEnterWithoutReq": { "Skull Woods Second Section Hole": [["moon pearl"]], "Skull Woods Final Section": [["moon pearl", "fire rod"]] },
-			"connectsToRegionWithReq": { "Lost Woods": [["mirror"]] }
+			"connectsToRegionWithReq": { "Lost Woods": [["mirror"]] },
+			mirrorCoords: {
+				"Lost Woods": [2208, 147]
+			}
 		},
 		'Dark World North West': {
 			isInLightWorld: false,
@@ -618,14 +622,22 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Dark World North West",
 			"fullyAccessible": ["Skull Woods Second Section Door (East)", "Skull Woods First Section Hole (West)", "Skull Woods First Section Hole (East)", "Skull Woods First Section Door", "Dark World Lumberjack Shop", "Fortune Teller (Dark)", "Dark Sanctuary Hint", "Red Shield Shop", "Chest Game", "C-Shaped House"],
 			"exitToRegionButCantEnterWithoutReq": { "Skull Woods First Section Hole (North)": [["moon pearl"]], "Thieves Town": [["moon pearl"]], "Brewery": [["moon pearl", "bombs"]] },
-			"connectsToRegionWithReq": { "Village of Outcasts Shop Region": [["magic hammer", "moon pearl"]], "Dark World Potion Shop Region": [["moon pearl", "flippers"]], "Bumper Cave (Bottom) Region": [["moon pearl", "progressive glove~1"]], "Graveyard Cave Region": [["moon pearl", "mirror"]], "Kings Grave Region": [["moon pearl", "mirror"]], "Dark World South": [[]], "Dark World Hammer Peg Cave Region": [["progressive glove~2", "moon pearl"]], "Kakariko": [["mirror"]] }
+			"connectsToRegionWithReq": { "Village of Outcasts Shop Region": [["magic hammer", "moon pearl"]], "Dark World Potion Shop Region": [["moon pearl", "flippers"]], "Bumper Cave (Bottom) Region": [["moon pearl", "progressive glove~1"]], "Graveyard Cave Region": [["moon pearl", "mirror"]], "Kings Grave Region": [["moon pearl", "mirror"]], "Dark World South": [[]], "Dark World Hammer Peg Cave Region": [["progressive glove~2", "moon pearl"]], "Kakariko": [["mirror"]] },
+			mirrorCoords: {
+				"Graveyard Cave Region": [3218, 573],
+				"Kings Grave Region": [3308, 623],
+				"Kakariko": [2470, 826],
+			}
 		},
 		'Village of Outcasts Shop Region': {
 			isInLightWorld: false,
 			"regionName": "Village of Outcasts Shop Region",
 			"fullyAccessible": ["Village of Outcasts Shop"],
 			"connectsToRegionWithReq": { "Dark World North West": [["magic hammer", "moon pearl"]], "Kakariko": [["mirror"]] },
-			"exitToRegionButCantEnterWithoutReq": {}
+			"exitToRegionButCantEnterWithoutReq": {},
+			mirrorCoords: {
+				"Kakariko": [2502, 1111],
+			}
 		},
 		'Dark World South': {
 			isInLightWorld: false,
@@ -633,7 +645,12 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Dark World South",
 			"fullyAccessible": ["Archery Game", "Big Bomb Shop", "Swamp Palace", "Dark Lake Hylia Shop"],
 			"exitToRegionButCantEnterWithoutReq": { "Bonk Fairy (Dark)": [["pegasus boots", "moon pearl"]], "Hype Cave": [["moon pearl", "bombs"]] },
-			"connectsToRegionWithReq": { "Dark World North West": [["progressive glove~2"]], "Dark Lake Hylia Ledge": [["moon pearl", "flippers"]], "Dark World East": [["moon pearl", "flippers"], ["moon pearl", "magic hammer"]], "Cave 45 Region": [["mirror"]], "Two Brothers House (West) Region": [["mirror", "progressive glove~2", "moon pearl"]], "Links House Area": [["mirror"]] }
+			"connectsToRegionWithReq": { "Dark World North West": [["progressive glove~2"]], "Dark Lake Hylia Ledge": [["moon pearl", "flippers"]], "Dark World East": [["moon pearl", "flippers"], ["moon pearl", "magic hammer"]], "Cave 45 Region": [["mirror"]], "Two Brothers House (West) Region": [["mirror", "progressive glove~2", "moon pearl"]], "Links House Area": [["mirror"]] },
+			mirrorCoords: {
+				"Cave 45 Region": [2662, 1732],
+				"Two Brothers House (West) Region": [2255, 1467],
+				"Links House Area": [2859, 1655],
+			}
 		},
 		'Swamp': {
 			isInLightWorld: false,
@@ -641,7 +658,15 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Swamp",
 			"fullyAccessible": ["Mire Shed", "Dark Desert Fairy", "Dark Desert Hint"],
 			"exitToRegionButCantEnterWithoutReq": { "Misery Mire": [["misery mire logic~true", "moon pearl"]] },
-			"connectsToRegionWithReq": { "Desert Palace Entrance (East) Region": [["mirror"]], "Desert Palace Entrance (North) Region": [["mirror"]], "Desert Palace Entrance (South) Region": [["mirror"]], "Desert Palace Entrance (West) Region": [["mirror"]], "Checkerboard Cave Region": [["mirror"]], "Desert Region": [["mirror"]] }
+			"connectsToRegionWithReq": { "Desert Palace Entrance (East) Region": [["mirror"]], "Desert Palace Entrance (North) Region": [["mirror"]], "Desert Palace Entrance (South) Region": [["mirror"]], "Desert Palace Entrance (West) Region": [["mirror"]], "Checkerboard Cave Region": [["mirror"]], "Desert Region": [["mirror"]] },
+			mirrorCoords: {
+				"Desert Palace Entrance (East) Region": [2288, 1649],
+				"Desert Palace Entrance (North) Region": [2213, 1583],
+				"Desert Palace Entrance (South) Region": [2216, 1673],
+				"Desert Palace Entrance (West) Region": [2124, 1673],
+				"Checkerboard Cave Region": [2381, 1590],
+				"Desert Region": [2282, 1814],
+			}
 		},
 		'Dark World East': {
 			isInLightWorld: false,
@@ -649,7 +674,12 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Dark World East",
 			"fullyAccessible": ["Dark Lake Hylia Fairy", "Palace of Darkness Hint", "East Dark World Hint"],
 			"exitToRegionButCantEnterWithoutReq": { "Pyramid Fairy": [["special crystals~2"]], "Pyramid Hole": [["pyramid hole"]], "Palace of Darkness": [["moon pearl"]] },
-			"connectsToRegionWithReq": { "Dark World South": [["moon pearl", "magic hammer"]], "Dark World Potion Shop Region": [["moon pearl", "flippers"], ["moon pearl", "progressive glove~1"], ["moon pearl", "magic hammer"]], "Dark Lake Hylia Ledge": [["moon pearl", "flippers"]], "Hyrule Castle Ledge": [["mirror"]], "Near the Dam": [["mirror"]] }
+			"connectsToRegionWithReq": { "Dark World South": [["moon pearl", "magic hammer"]], "Dark World Potion Shop Region": [["moon pearl", "flippers"], ["moon pearl", "progressive glove~1"], ["moon pearl", "magic hammer"]], "Dark Lake Hylia Ledge": [["moon pearl", "flippers"]], "Hyrule Castle Ledge": [["mirror"]], "Hyrule Castle": [["mirror"]], "East Ruins": [["mirror"]] },
+			mirrorCoords: {
+				"Hyrule Castle Ledge": [3084, 852],
+				"East Ruins": [3466, 1106],
+				"Hyrule Castle": [3088, 1055]
+			}
 		},
 		'Dark World Potion Shop Region': {
 			isInLightWorld: false,
@@ -657,28 +687,37 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Dark World Potion Shop Region",
 			"fullyAccessible": ["Dark World Potion Shop"],
 			"exitToRegionButCantEnterWithoutReq": {},
-			"connectsToRegionWithReq": { "Dark World East": [["moon pearl", "progressive glove~1"], ["moon pearl", "magic hammer"]], "Dark World North West": [["moon pearl", "hookshot"]], "Potion Shop Region": [["mirror"]] }
+			"connectsToRegionWithReq": { "Dark World East": [["moon pearl", "progressive glove~1"], ["moon pearl", "magic hammer"]], "Dark World North West": [["moon pearl", "hookshot"]], "Potion Shop Region": [["mirror"]] },
+			mirrorCoords: {
+				"Potion Shop Region": [3610, 704],
+			}
 		},
 		'Bumper Cave (Top) Region': {
 			isInLightWorld: false,
 			"regionName": "Bumper Cave (Top) Region",
 			"fullyAccessible": ["Bumper Cave (Top)"],
 			"exitToRegionButCantEnterWithoutReq": {},
-			"connectsToRegionWithReq": { "Dark World North West": [[]], "Return from Death Mountain Ledge": [["mirror"]] }
+			"connectsToRegionWithReq": { "Dark World North West": [[]], "Return from Death Mountain Ledge": [["mirror"]] },
+			mirrorCoords: {
+				"Return from Death Mountain Ledge": [2762, 306],
+			}
 		},
 		'Bumper Cave (Bottom) Region': {
 			isInLightWorld: false,
 			"regionName": "Bumper Cave (Bottom) Region",
 			"fullyAccessible": ["Bumper Cave (Bottom)"],
 			"exitToRegionButCantEnterWithoutReq": {},
-			"connectsToRegionWithReq": { "Dark World North West": [[]], "Old Man Cave (West) Region": [["mirror"]] }
+			"connectsToRegionWithReq": { "Dark World North West": [[]], "Old Man Cave (West) Region": [["mirror"]] },
+			mirrorCoords: {
+				"Old Man Cave (West) Region": [2800, 384],
+			}
 		},
 		'Pyramid Entrance Region': {
 			isInLightWorld: false,
 			"regionName": "Pyramid Entrance Region",
 			"fullyAccessible": ["Pyramid Entrance"],
 			"exitToRegionButCantEnterWithoutReq": {},
-			"connectsToRegionWithReq": { "Dark World East": [[]], "Hyrule Castle": [["mirror"]] }
+			"connectsToRegionWithReq": { "Dark World East": [[]] }
 		},
 		'Dark Lake Hylia Ledge': {
 			isInLightWorld: false,
@@ -686,24 +725,33 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Dark Lake Hylia Ledge",
 			"fullyAccessible": ["Dark Lake Hylia Ledge Hint"],
 			"exitToRegionButCantEnterWithoutReq": { "Dark Lake Hylia Ledge Fairy": [["moon pearl", "bombs"]], "Dark Lake Hylia Ledge Spike Cave": [["moon pearl", "progressive glove~1"]] },
-			"connectsToRegionWithReq": { "Dark World East": [["moon pearl", "flippers"]], "Lake Hylia Region": [["mirror"]] }
+			"connectsToRegionWithReq": { "Dark World East": [["moon pearl", "flippers"]], "Lake Hylia Region": [["mirror"]] },
+			mirrorCoords: {
+				"Lake Hylia Region": [4048, 1788],
+			}
 		},
 		'Ice Palace Region': {
 			isInLightWorld: false,
 			"regionName": "Ice Palace Region",
 			"fullyAccessible": ["Ice Palace"],
 			"exitToRegionButCantEnterWithoutReq": {},
-			"connectsToRegionWithReq": { "Capacity Upgrade Region": [["mirror"]] }
+			"connectsToRegionWithReq": { "Capacity Upgrade Region": [["mirror"]] },
+			mirrorCoords: {
+				"Capacity Upgrade Region": [3664, 1784],
+			}
 		},
 		'Dark World Hammer Peg Cave Region': {
 			isInLightWorld: false,
 			"regionName": "Dark World Hammer Peg Cave Region",
 			"fullyAccessible": [],
-			"exitToRegionButCantEnterWithoutReq": { 
+			"exitToRegionButCantEnterWithoutReq": {
 				"Dark World Hammer Peg Cave": [["moon pearl", "magic hammer"]],
 				"Bat Cave Drop": [["mirror"]], // technically not accurate, but because you can't exit from here, it doesn't matter
 			},
-			"connectsToRegionWithReq": { "Dark World North West": [["moon pearl", "progressive glove~2"]], "Kakariko": [["mirror"]] }
+			"connectsToRegionWithReq": { "Dark World North West": [["moon pearl", "progressive glove~2"]], "Kakariko": [["mirror"]] },
+			mirrorCoords: {
+				"Kakariko": [2752, 1176],
+			}
 		},
 		'Dark Death Mountain Lower West': {
 			isInLightWorld: false,
@@ -711,7 +759,11 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Dark Death Mountain Lower West",
 			"fullyAccessible": ["Dark Death Mountain Fairy", "Spike Cave"],
 			"exitToRegionButCantEnterWithoutReq": {},
-			"connectsToRegionWithReq": { "Death Mountain Lower West": [["mirror"]], "Tower of Hera Region": [["mirror"]] }
+			"connectsToRegionWithReq": { "Death Mountain Lower West": [["mirror"]], "Tower of Hera Region": [["mirror"]] },
+			mirrorCoords: {
+				"Death Mountain Lower West": [3032, 194],
+				"Tower of Hera Region": [3032, 180],
+			}
 		},
 		'Dark Death Mountain Upper': {
 			isInLightWorld: false,
@@ -719,7 +771,11 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Dark Death Mountain Upper",
 			"fullyAccessible": ["Superbunny Cave (Top)"],
 			"exitToRegionButCantEnterWithoutReq": { 'Turtle Rock': [["turtle rock logic~true", "moon pearl", 'progressive sword~1']], "Hookshot Cave": [["moon pearl", "progressive glove~1"]], "Ganons Tower": [["ganon tower logic~true"]] },
-			"connectsToRegionWithReq": { "Dark Death Mountain Lower West": [[]], "Dark Death Mountain Lower East": [[]], "Tower of Hera Region": [["mirror"]], "Paradox Cave (Top) Region": [["mirror"]] }
+			"connectsToRegionWithReq": { "Dark Death Mountain Lower West": [[]], "Dark Death Mountain Lower East": [[]], "Tower of Hera Region": [["mirror"]], "Paradox Cave (Top) Region": [["mirror"]] },
+			mirrorCoords: {
+				"Tower of Hera Region": [3402, 100],
+				"Paradox Cave (Top) Region": [3610, 104],
+			}
 		},
 		'Dark Death Mountain Lower East': {
 			isInLightWorld: false,
@@ -727,21 +783,32 @@ export const load: PageLoad = ({ params }) => {
 			"regionName": "Dark Death Mountain Lower East",
 			"fullyAccessible": ["Superbunny Cave (Bottom)", "Cave Shop (Dark Death Mountain)"],
 			"exitToRegionButCantEnterWithoutReq": {},
-			"connectsToRegionWithReq": { "Death Mountain Lower East": [["mirror"]], "Fairy Ascension Cave (Bottom) Region": [["mirror", "moon pearl"]] }
+			"connectsToRegionWithReq": { "Death Mountain Lower East": [["mirror"]], "Fairy Ascension Cave (Bottom) Region": [["mirror", "moon pearl"]] },
+			mirrorCoords: {
+				"Death Mountain Lower East": [3688, 416],
+				"Fairy Ascension Cave (Bottom) Region": [3724, 330],
+			}
 		},
 		'Turtle Rock Montain Ledge Region': {
 			isInLightWorld: false,
 			"regionName": "Turtle Rock Montain Ledge Region",
 			"fullyAccessible": ["Dark Death Mountain Ledge (East)", "Dark Death Mountain Ledge (West)"],
 			"exitToRegionButCantEnterWithoutReq": {},
-			"connectsToRegionWithReq": { "Mimic Cave Region": [["mirror"]], "Spiral Cave Region": [["mirror"]] }
+			"connectsToRegionWithReq": { "Mimic Cave Region": [["mirror"]], "Spiral Cave Region": [["mirror"]] },
+			mirrorCoords: {
+				"Mimic Cave Region": [3780, 194],
+				"Spiral Cave Region": [3696, 198],
+			}
 		},
 		'Turtle Rock Isolated Ledge Region': {
 			isInLightWorld: false,
 			"regionName": "Turtle Rock Isolated Ledge Region",
 			"fullyAccessible": ["Turtle Rock Isolated Ledge Entrance"],
 			"exitToRegionButCantEnterWithoutReq": {},
-			"connectsToRegionWithReq": { "Fairy Ascension Cave (Top) Region": [["mirror"]] }
+			"connectsToRegionWithReq": { "Fairy Ascension Cave (Top) Region": [["mirror"]] },
+			mirrorCoords: {
+				"Fairy Ascension Cave (Top) Region": [3746, 246],
+			}
 		},
 		'Dark Death Mountain Island': {
 			isInLightWorld: false,
@@ -791,7 +858,7 @@ export const load: PageLoad = ({ params }) => {
 		'Kakariko Gamble Game': 'Kakariko',
 		'Two Brothers House (East)': 'Kakariko',
 		'Bat Cave Drop': 'Kakariko',
-		
+
 		'Aginahs Cave': 'Desert Region',
 		'Desert Fairy': 'Desert Region',
 
@@ -812,7 +879,7 @@ export const load: PageLoad = ({ params }) => {
 		'Sahasrahlas Hut': 'East Ruins',
 		'Eastern Palace': 'East Ruins',
 		'Lake Hylia Fairy': 'East Ruins',
-		
+
 		'Hyrule Castle Secret Entrance Drop': 'Hyrule Castle',
 		'Hyrule Castle Secret Entrance Stairs': 'Hyrule Castle',
 		'Hyrule Castle Entrance (South)': 'Hyrule Castle',

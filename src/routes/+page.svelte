@@ -662,9 +662,6 @@
 			repaintRoute();
 			// paintRoute();
 		}
-		let checkpointF = new Date().getMilliseconds();
-		let checkpointFtime = checkpointF - checkpointE;
-		console.log(checkpointFtime);
 	};
 
 	const drawOneWayArrow = (
@@ -1606,12 +1603,14 @@
 		enterable: boolean;
 		previousCoordsInPath: number[];
 		shortestPathUsedMirrorToArrive: boolean;
+		mirrorCoordinates: number[];
 		connections: {
 			[key: string]: {
 				fromDoor: Door;
 				toDoor: Door;
 				distance: number;
 				mirrorUsed: boolean;
+				mirrorCoords: number[];
 				connectionExplanation: string;
 				lineStyle: LineStyle;
 				internalExit: string | null;
@@ -1630,6 +1629,7 @@
 				shortestPathVia: '',
 				distanceFromSpawn: 0,
 				shortestPathUsedMirrorToArrive: false,
+				mirrorCoordinates: [],
 				name: regionName,
 				connections: {},
 				enterable: true,
@@ -1641,6 +1641,7 @@
 				coords: data.entranceCoords[entranceName].coords,
 				enterable: true,
 				shortestPathUsedMirrorToArrive: false,
+				mirrorCoordinates: [],
 				pathFromSpawn: [],
 				shortestPathVia: '',
 				distanceFromSpawn: 0,
@@ -1649,7 +1650,6 @@
 				previousCoordsInPath: []
 			};
 		}
-		console.log('regions and entrances doors initialized');
 
 		// let fluteDrops = Object.values(data.regions).filter(it => it.isFluteDrop)
 		let warpSpots = Object.values(data.regions).filter(it => it.isWarpSpot)
@@ -1669,6 +1669,7 @@
 					lineStyle: LineStyle.DOTTED,
 					distance: 0,
 					mirrorUsed: false,
+					mirrorCoords: [],
 					fromDoor: door,
 					toDoor: skyDoor,
 					internalExit: null
@@ -1685,6 +1686,7 @@
 					lineStyle: LineStyle.STRAIGHT,
 					distance: -1,
 					mirrorUsed: false,
+					mirrorCoords: [],
 					fromDoor: door,
 					toDoor,
 					internalExit: null
@@ -1740,6 +1742,7 @@
 					lineStyle: LineStyle.STRAIGHT,
 					distance: -1,
 					mirrorUsed: false,
+					mirrorCoords: [],
 					fromDoor: door,
 					toDoor,
 					internalExit: null
@@ -1818,8 +1821,8 @@
 				if (!toDoor) continue;
 
 				let mirrorNecessary = (!data.regions[regionName].isInLightWorld && connectedRegion.isInLightWorld && !connectedRegion.isFluteDrop)
-
-				if (mirrorNecessary) console.log(`${regionName} needs mirror to get to ${connectedRegionName}`)
+				let allMirrorCoordsFromRegion = data.regions[regionName].mirrorCoords;
+				let mirrorCoords = allMirrorCoordsFromRegion ? allMirrorCoordsFromRegion[connectedRegionName] || [0, 0] : [0, 0]
 
 				let isFlying = connectedRegion.isFluteDrop
 				let isFlute = data.regions[regionName].isFluteDrop
@@ -1838,6 +1841,7 @@
 					connectionExplanation: `distance ${distance}: ${door.name} to ${toDoor.name} | ` + connectionExplanation,//`In the overworld region '${regionName}' go to connected region '${connectedRegionName}'${optionalPathString}`,
 					lineStyle,
 					mirrorUsed: mirrorNecessary,
+					mirrorCoords: mirrorCoords,
 					distance: distance,
 					fromDoor: door,
 					toDoor,
@@ -1856,6 +1860,7 @@
 				connectionExplanation: `distance 0: ${door.name} to ${regionDoor.name}`, //`ignore: enter region '${data.entranceToRegionMap[entranceName]}' from '${entranceName}'`,
 				lineStyle: LineStyle.STRAIGHT,
 				mirrorUsed: false,
+				mirrorCoords: [],
 				distance: 0,
 				fromDoor: door,
 				toDoor: regionDoor,
@@ -1868,6 +1873,7 @@
 					connectionExplanation: `distance .0001: ${door.name} to ${toDoor.name} | Enter '${entranceName}' and exit to get to overworld location '${entranceData.goesTo}'`,// in region '${data.entranceToRegionMap[entranceData.goesTo]}'`,
 					lineStyle: LineStyle.DASHED,
 					mirrorUsed: false,
+					mirrorCoords: [],
 					distance: .0001,
 					fromDoor: door,
 					toDoor,
@@ -1894,6 +1900,7 @@
 						fromDoor: door,
 						lineStyle: LineStyle.DASHED,
 						mirrorUsed: false,
+						mirrorCoords: [],
 						distance: 100,
 						toDoor,
 						internalExit: reachableExitName
@@ -1928,6 +1935,7 @@
 						fromDoor: door,
 						lineStyle: LineStyle.DASHED,
 						mirrorUsed: false,
+						mirrorCoords: [],
 						distance: 100,
 						toDoor,
 						internalExit: reachableExitName
@@ -2040,22 +2048,11 @@
 				let e1Coords = currentNode.coords.length > 0 ? currentNode.coords : currentNode.previousCoordsInPath;
 				
 				let connectionDistance = connection.distance === -1 ? distanceBetween(e1Coords, connectedNode.coords) : connection.distance;
-				let thing = {
-					mirrored: currentNode.shortestPathUsedMirrorToArrive,
-					connDist: connection.distance,
-					connDistInvalid: connection.distance === -1,
-					lineLength: distanceBetween(e1Coords, connectedNode.coords),
-					connectionDistance
-				}
 				let pathLength = currentNode.distanceFromSpawn + connectionDistance;
-				if (connection.connectionExplanation === "distance -1: Near the Dam to Dam | Go to 'Dam'") {
-					console.log((JSON.stringify(currentNode.pathFromSpawn)))
-					console.log(connectionDistance + " ~ " + pathLength + " ~ " + connection.connectionExplanation)
-					console.log("found it!")
-				}
+
 				if (pathLength < connectedNode.distanceFromSpawn) {
-					console.log({connectedNode: connectedNodeName, toBeReplaced: connectedNode.pathFromSpawn})
 					connectedNode.shortestPathUsedMirrorToArrive = connection.mirrorUsed
+					connectedNode.mirrorCoordinates = connection.mirrorCoords;
 					// console.log(`${currentNode.name} -> ${connectedNode.name}`);
 					connectedNode.distanceFromSpawn = pathLength;
 					connectedNode.shortestPathVia = currentNode.name;
@@ -2068,17 +2065,34 @@
 						let e2Coords = connectedNode.coords
 						let lineStyle = connection.lineStyle
 
+						if (currentNode.shortestPathUsedMirrorToArrive) {
+							let mirrorCoords = currentNode.mirrorCoordinates;
+							let lightWorldMirrorCoords = [mirrorCoords[0] - 2064, mirrorCoords[1]];
+							connectedNode.pathFromSpawn.push({
+								e1: e1Coords,
+								e2: mirrorCoords,
+								lineStyle: LineStyle.STRAIGHT
+							});
+							connectedNode.pathFromSpawn.push({
+								e1: mirrorCoords,
+								e2: lightWorldMirrorCoords,
+								lineStyle: LineStyle.DOTTED
+							});
+							e1Coords = lightWorldMirrorCoords;
+							lineStyle = LineStyle.STRAIGHT;
+						}
+
 						connectedNode.pathFromSpawn.push({
 							e1: e1Coords,
 							e2: e2Coords,
-							lineStyle: currentNode.shortestPathUsedMirrorToArrive ? LineStyle.DOTTED : lineStyle
+							lineStyle: lineStyle
 						});
 					} else {
 						connectedNode.previousCoordsInPath = currentNode.coords.length > 0
 							? currentNode.coords
 							: currentNode.previousCoordsInPath
 					}
-					console.log({connectedNode: connectedNodeName, replacedBy: connectedNode.pathFromSpawn})
+					// console.log({connectedNode: connectedNodeName, replacedBy: connectedNode.pathFromSpawn})
 				}
 			}
 			unvisitedNodes.delete(currentNode);
