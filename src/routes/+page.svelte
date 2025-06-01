@@ -1665,7 +1665,7 @@
 				let skyRegionName = "I'm flyin' Jack"
 				let skyDoor = doors[skyRegionName]
 				door.connections[skyRegionName] = {
-					connectionExplanation: `distance 0: ${regionName} to ${skyRegionName}`,// via the overworld`,
+					connectionExplanation: '',//`distance 0: ${regionName} to ${skyRegionName}`,// via the overworld`,
 					lineStyle: LineStyle.DOTTED,
 					distance: 0,
 					mirrorUsed: false,
@@ -1682,7 +1682,7 @@
 				let toDoor = doors[entranceName];
 				if (!toDoor) continue;
 				door.connections[entranceName] = {
-					connectionExplanation: `distance -1: ${door.name} to ${toDoor.name} | Go to '${entranceName}'`,// via the overworld`,
+					connectionExplanation: `Go to '${entranceName}'`,// via the overworld`,
 					lineStyle: LineStyle.STRAIGHT,
 					distance: -1,
 					mirrorUsed: false,
@@ -1738,7 +1738,7 @@
 				let toEntrance = data.entranceCoords[entranceName];
 				if (!toEntrance) continue;
 				door.connections[entranceName] = {
-					connectionExplanation: `distance -1: ${door.name} to ${toDoor.name} | Go to '${entranceName}'`,//`In the overworld region '${regionName}' go to '${entranceName}'`,
+					connectionExplanation: `Go to '${entranceName}'`,//`In the overworld region '${regionName}' go to '${entranceName}'`,
 					lineStyle: LineStyle.STRAIGHT,
 					distance: -1,
 					mirrorUsed: false,
@@ -1838,7 +1838,7 @@
 
 
 				door.connections[connectedRegionName] = {
-					connectionExplanation: `distance ${distance}: ${door.name} to ${toDoor.name} | ` + connectionExplanation,//`In the overworld region '${regionName}' go to connected region '${connectedRegionName}'${optionalPathString}`,
+					connectionExplanation: connectionExplanation,//`In the overworld region '${regionName}' go to connected region '${connectedRegionName}'${optionalPathString}`,
 					lineStyle,
 					mirrorUsed: mirrorNecessary,
 					mirrorCoords: mirrorCoords,
@@ -1857,7 +1857,7 @@
 			let regionDoor = doors[data.entranceToRegionMap[entranceName]];
 			if (!regionDoor) continue;
 			door.connections[data.entranceToRegionMap[entranceName]] = {
-				connectionExplanation: `distance 0: ${door.name} to ${regionDoor.name}`, //`ignore: enter region '${data.entranceToRegionMap[entranceName]}' from '${entranceName}'`,
+				connectionExplanation: '', //`ignore: enter region '${data.entranceToRegionMap[entranceName]}' from '${entranceName}'`,
 				lineStyle: LineStyle.STRAIGHT,
 				mirrorUsed: false,
 				mirrorCoords: [],
@@ -1870,7 +1870,7 @@
 				let toDoor = doors[entranceData.goesTo];
 				if (!toDoor) continue;
 				door.connections[entranceData.goesTo] = {
-					connectionExplanation: `distance .0001: ${door.name} to ${toDoor.name} | Enter '${entranceName}' and exit to get to overworld location '${entranceData.goesTo}'`,// in region '${data.entranceToRegionMap[entranceData.goesTo]}'`,
+					connectionExplanation: `Enter '${entranceName}' and exit to get to overworld location '${entranceData.goesTo}'`,// in region '${data.entranceToRegionMap[entranceData.goesTo]}'`,
 					lineStyle: LineStyle.DASHED,
 					mirrorUsed: false,
 					mirrorCoords: [],
@@ -1896,12 +1896,12 @@
 					let toDoor = doors[reachableExit.goesTo];
 					if (!toDoor) continue;
 					door.connections[reachableExit.goesTo] = {
-						connectionExplanation: `distance 100: ${door.name} to ${toDoor.name} | Enter '${entranceName}' and exit at '${reachableExitName}' to get to overworld location '${reachableExit.goesTo}'`,// in region '${data.entranceToRegionMap[reachableExit.goesTo]}'${reachableExitName.indexOf('urtle') > -1 ? ' *TURTLE ROCK LOGIC NOT IMPLEMENTED - THIS STEP MAY BE IMPOSSIBLE - SORRY' : ''}`,
+						connectionExplanation: `Enter '${entranceName}' and exit at '${reachableExitName}' to get to overworld location '${reachableExit.goesTo}'`,// in region '${data.entranceToRegionMap[reachableExit.goesTo]}'${reachableExitName.indexOf('urtle') > -1 ? ' *TURTLE ROCK LOGIC NOT IMPLEMENTED - THIS STEP MAY BE IMPOSSIBLE - SORRY' : ''}`,
 						fromDoor: door,
 						lineStyle: LineStyle.DASHED,
 						mirrorUsed: false,
 						mirrorCoords: [],
-						distance: 100,
+						distance: reachableExitName.indexOf("urtle") > -1 ? 100 : 99999,
 						toDoor,
 						internalExit: reachableExitName
 					};
@@ -1931,7 +1931,7 @@
 					let toDoor = doors[reachableExit.goesTo];
 					if (!toDoor) continue;
 					door.connections[reachableExit.goesTo] = {
-						connectionExplanation: `distance 100: ${door.name} to ${toDoor.name} | Enter '${entranceName}' and exit at '${reachableExitName}' to get to overworld location '${reachableExit.goesTo}'`,// in region '${data.entranceToRegionMap[reachableExit.goesTo]}'`,
+						connectionExplanation: `Enter '${entranceName}' and exit at '${reachableExitName}' to get to overworld location '${reachableExit.goesTo}'`,// in region '${data.entranceToRegionMap[reachableExit.goesTo]}'`,
 						fromDoor: door,
 						lineStyle: LineStyle.DASHED,
 						mirrorUsed: false,
@@ -2057,8 +2057,8 @@
 					connectedNode.distanceFromSpawn = pathLength;
 					connectedNode.shortestPathVia = currentNode.name;
 					connectedNode.pathFromSpawn = JSON.parse(JSON.stringify(currentNode.pathFromSpawn));
-					connectedNode.pathFromSpawn.push(connectionDistance + " ~ " + pathLength + " ~ " + connection.connectionExplanation);
 					if (connection.connectionExplanation !== '') {
+						connectedNode.pathFromSpawn.push(connection.connectionExplanation);
 					}
 					if (connectedNode.coords.length > 0) {
 
