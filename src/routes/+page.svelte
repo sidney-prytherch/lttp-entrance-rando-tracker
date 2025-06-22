@@ -2912,9 +2912,9 @@
 						{/each}
 					</div>
 				</div>
-			</div>
-			<div>
-				<button onclick={setGoesToSelf}>Goes to self only</button>
+				<div>
+					<button onclick={setGoesToSelf}>Goes to self only</button>
+				</div>
 			</div>
 			<!-- 6 pixel border * 2 = 12 -->
 			<img
