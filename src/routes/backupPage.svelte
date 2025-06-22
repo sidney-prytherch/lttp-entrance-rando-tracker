@@ -43,6 +43,7 @@
 
 	const borderDefaultColor = '#000';
 	const borderUnexploredExits = '#5d00a9';
+	const borderColorConnected = '#0066ff';
 	const borderUnreachableColor = '#ff0000';
 	const borderHoveringColor = '#0000ff';
 
@@ -498,6 +499,7 @@
 			) {
 				const connectorExit = data.connectorCoords[entranceCoord.goesTo];
 				if (connectorExit) {
+					borderColor = borderColorConnected;
 					for (let exitName in connectorExit.reachableExits) {
 						const exit = data.connectorCoords[exitName];
 						if (exit) {
@@ -624,6 +626,8 @@
 					drawOneWayArrow(entrancePair[0].coords, entrancePair[1].coords, LineStyle.STRAIGHT);
 			}
 
+
+
 			overworldCtx.font = 'bold 60px Arial';
 			overworldCtx.fillStyle = '#FFF';
 			overworldCtx.strokeStyle = '#000';
@@ -662,9 +666,6 @@
 			repaintRoute();
 			// paintRoute();
 		}
-		let checkpointF = new Date().getMilliseconds();
-		let checkpointFtime = checkpointF - checkpointE;
-		console.log(checkpointFtime);
 	};
 
 	const drawOneWayArrow = (

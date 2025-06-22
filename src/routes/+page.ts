@@ -309,7 +309,7 @@ export const load: PageLoad = ({ params }) => {
 				"Kakariko Gamble Game",
 				"Two Brothers House (East)",
 				"Kakariko Shop",
-				"Tavern (Front)",
+				"Tavern (Front)"
 			],
 			exitToRegionButCantEnterWithoutReq: {
 				"Bat Cave Drop": [["magic hammer"]],
@@ -747,7 +747,7 @@ export const load: PageLoad = ({ params }) => {
 			"fullyAccessible": [],
 			"exitToRegionButCantEnterWithoutReq": {
 				"Dark World Hammer Peg Cave": [["moon pearl", "magic hammer"]],
-				"Bat Cave Drop": [["mirror"]], // technically not accurate, but because you can't exit from here, it doesn't matter
+				// "Bat Cave Drop": [["mirror"]], // technically not accurate, but because you can't exit from here, it doesn't matter
 			},
 			"connectsToRegionWithReq": { "Dark World North West": [["moon pearl", "progressive glove~2"]], "Kakariko": [["mirror"]] },
 			mirrorCoords: {

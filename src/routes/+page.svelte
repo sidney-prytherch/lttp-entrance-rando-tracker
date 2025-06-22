@@ -43,6 +43,7 @@
 
 	const borderDefaultColor = '#000';
 	const borderUnexploredExits = '#5d00a9';
+	const borderColorConnected = '#0066ff';
 	const borderUnreachableColor = '#ff0000';
 	const borderHoveringColor = '#0000ff';
 
@@ -498,6 +499,7 @@
 			) {
 				const connectorExit = data.connectorCoords[entranceCoord.goesTo];
 				if (connectorExit) {
+					borderColor = borderColorConnected;
 					for (let exitName in connectorExit.reachableExits) {
 						const exit = data.connectorCoords[exitName];
 						if (exit) {
@@ -1665,7 +1667,7 @@
 				let skyRegionName = "I'm flyin' Jack"
 				let skyDoor = doors[skyRegionName]
 				door.connections[skyRegionName] = {
-					connectionExplanation: '',//`distance 0: ${regionName} to ${skyRegionName}`,// via the overworld`,
+					connectionExplanation: ``,// via the overworld`,
 					lineStyle: LineStyle.DOTTED,
 					distance: 0,
 					mirrorUsed: false,
@@ -1857,7 +1859,7 @@
 			let regionDoor = doors[data.entranceToRegionMap[entranceName]];
 			if (!regionDoor) continue;
 			door.connections[data.entranceToRegionMap[entranceName]] = {
-				connectionExplanation: '', //`ignore: enter region '${data.entranceToRegionMap[entranceName]}' from '${entranceName}'`,
+				connectionExplanation: ``, //`ignore: enter region '${data.entranceToRegionMap[entranceName]}' from '${entranceName}'`,
 				lineStyle: LineStyle.STRAIGHT,
 				mirrorUsed: false,
 				mirrorCoords: [],
@@ -2057,8 +2059,8 @@
 					connectedNode.distanceFromSpawn = pathLength;
 					connectedNode.shortestPathVia = currentNode.name;
 					connectedNode.pathFromSpawn = JSON.parse(JSON.stringify(currentNode.pathFromSpawn));
+					connectedNode.pathFromSpawn.push(connectionDistance + " ~ " + pathLength + " ~ " + connection.connectionExplanation);
 					if (connection.connectionExplanation !== '') {
-						connectedNode.pathFromSpawn.push(connection.connectionExplanation);
 					}
 					if (connectedNode.coords.length > 0) {
 
