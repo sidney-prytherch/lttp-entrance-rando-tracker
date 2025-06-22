@@ -42,7 +42,7 @@
 	// let routeIndex: number = $state(0);
 
 	const borderDefaultColor = '#000';
-	
+
 	const borderUnexploredExits = '#ffe387';
 	const borderSingleExitToElsewhereColor = '#7d5f00';
 
@@ -497,8 +497,10 @@
 				if (
 					otherEntrance &&
 					(showArrows ||
-						selectedEntranceName === entranceName ||
-						entranceCoord.goesTo === selectedEntranceName)
+						selectedEntranceName === entranceName
+						//  ||
+						// entranceCoord.goesTo === selectedEntranceName
+					)
 				) {
 					arrowsToDraw.push([entranceCoord, otherEntrance]);
 				}
@@ -520,8 +522,10 @@
 								if (
 									otherEntrance &&
 									(showArrows ||
-										selectedEntranceName === entranceName ||
-										exit.goesTo === selectedEntranceName)
+										selectedEntranceName === entranceName
+										//  ||
+										// exit.goesTo === selectedEntranceName
+									)
 								) {
 									arrowsToDraw.push([entranceCoord, otherEntrance]);
 								}
@@ -547,8 +551,10 @@
 								if (
 									otherEntrance &&
 									(showArrows ||
-										selectedEntranceName === entranceName ||
-										exit.goesTo === selectedEntranceName)
+										selectedEntranceName === entranceName
+										//  ||
+										// exit.goesTo === selectedEntranceName
+									)
 								) {
 									arrowsToDraw.push([entranceCoord, otherEntrance]);
 								}
