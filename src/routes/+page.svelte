@@ -42,12 +42,17 @@
 	// let routeIndex: number = $state(0);
 
 	const borderDefaultColor = '#000';
-	const borderUnexploredExits = '#5d00a9';
-	const borderUnexploredExitsConnector = '#ca9fff ';
-	const borderColorConnected = '#00369b';
-	const borderUnexploredExitsConnectorDungeon = '#660066 ';
-	const borderColorConnectedDungeon = '#000066';
-	const borderSingleExitToElsewhereColor = '#663300'
+	
+	const borderUnexploredExits = '#ffe387';
+	const borderSingleExitToElsewhereColor = '#7d5f00';
+
+	const borderUnexploredExitsConnector = '#c087ff';
+	const borderColorConnected = '#3c007f';
+
+	const borderUnexploredExitsConnectorDungeon = '#66a6fe';
+	const borderColorConnectedDungeon = '#00357f';
+
+
 	const borderUnreachableColor = '#ff0000';
 	const borderHoveringColor = '#0000ff';
 
@@ -677,7 +682,7 @@
 	const drawOneWayArrow = (
 		entranceDataTo: number[],
 		entranceDataFrom: number[],
-		lineStyle: string
+		lineStyle: string,
 	) => {
 		if (overworldCtx) {
 			overworldCtx.shadowBlur = 8;
