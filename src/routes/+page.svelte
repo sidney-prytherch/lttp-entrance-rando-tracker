@@ -393,6 +393,7 @@
 
 	const setGoesToSelf = () => {
 		let entrance = data.entranceCoords[selectedEntranceName];
+		entrance.goesToSelectedOption = goToOptions[0];
 		if (entrance.goesTo !== '' && entrance.goesTo !== '...') {
 			let previousExit = data.entranceCoords[entrance.goesTo];
 			previousExit?.specialComesFrom.delete(selectedEntranceName);
