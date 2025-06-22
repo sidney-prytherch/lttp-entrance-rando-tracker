@@ -43,8 +43,8 @@
 
 	const borderDefaultColor = '#000';
 
-	const borderUnexploredExits = '#ffe387';
-	const borderSingleExitToElsewhereColor = '#7d5f00';
+	const borderUnexploredExits = '#f19b2e';
+	const borderSingleExitToElsewhereColor = '#985500';
 
 	const borderUnexploredExitsConnector = '#c087ff';
 	const borderColorConnected = '#3c007f';
