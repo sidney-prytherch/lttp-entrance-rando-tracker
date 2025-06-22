@@ -495,7 +495,6 @@
 						selectedEntranceName === entranceName ||
 						entranceCoord.goesTo === selectedEntranceName)
 				) {
-					console.log("HI " + selectedEntranceName )
 					arrowsToDraw.push([entranceCoord, otherEntrance]);
 				}
 				if (otherEntrance && entranceName !== entranceCoord.goesTo) {
@@ -631,7 +630,7 @@
 		if (overworldCtx) {
 			overworldCtx.shadowColor = 'black';
 			for (let entrancePair of arrowsToDraw) {
-				if (!isDisplayingRoute)
+				// if (!isDisplayingRoute)
 					drawOneWayArrow(entrancePair[0].coords, entrancePair[1].coords, LineStyle.STRAIGHT);
 			}
 
