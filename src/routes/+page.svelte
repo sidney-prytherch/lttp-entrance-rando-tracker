@@ -43,7 +43,11 @@
 
 	const borderDefaultColor = '#000';
 	const borderUnexploredExits = '#5d00a9';
-	const borderColorConnected = '#0066ff';
+	const borderUnexploredExitsConnector = '#ca9fff ';
+	const borderColorConnected = '#00369b';
+	const borderUnexploredExitsConnectorDungeon = '#660066 ';
+	const borderColorConnectedDungeon = '#000066';
+	const borderSingleExitToElsewhereColor = '#663300'
 	const borderUnreachableColor = '#ff0000';
 	const borderHoveringColor = '#0000ff';
 
@@ -491,7 +495,11 @@
 						selectedEntranceName === entranceName ||
 						entranceCoord.goesTo === selectedEntranceName)
 				) {
+					console.log("HI " + selectedEntranceName )
 					arrowsToDraw.push([entranceCoord, otherEntrance]);
+				}
+				if (otherEntrance && entranceName !== entranceCoord.goesTo) {
+					borderColor = borderSingleExitToElsewhereColor;
 				}
 			} else if (
 				entranceCoord.goesToSelectedOption === goToOptions[2] &&
@@ -514,7 +522,7 @@
 									arrowsToDraw.push([entranceCoord, otherEntrance]);
 								}
 							} else {
-								borderColor = borderUnexploredExits;
+								borderColor = borderUnexploredExitsConnector;
 							}
 						}
 					}
@@ -525,6 +533,7 @@
 			) {
 				const dungeonExit = data.dungeonCoords[entranceCoord.goesTo];
 				if (dungeonExit) {
+					borderColor = borderColorConnectedDungeon;
 					dungeonsToLabel.push(entranceCoord);
 					for (let exitName in dungeonExit.reachableExits) {
 						const exit = data.dungeonCoords[exitName];
@@ -540,7 +549,7 @@
 									arrowsToDraw.push([entranceCoord, otherEntrance]);
 								}
 							} else {
-								borderColor = borderUnexploredExits;
+								borderColor = borderUnexploredExitsConnectorDungeon;
 							}
 						}
 					}
