@@ -391,6 +391,21 @@
 		redrawEntrances();
 	};
 
+	const setGoesToSelf = () => {
+		let entrance = data.entranceCoords[selectedEntranceName];
+		if (entrance.goesTo !== '' && entrance.goesTo !== '...') {
+			let previousExit = data.entranceCoords[entrance.goesTo];
+			previousExit?.specialComesFrom.delete(selectedEntranceName);
+		}
+		entrance.goesTo = selectedEntranceName;
+		data.entranceCoords[hoveredExitName].specialComesFrom.add(selectedEntranceName);
+		selectingExitInOverworld = false;
+		entranceMiniZoomSpanVisible = false;
+		recalculateRoutes();
+		updateUI();
+		redrawEntrances();
+	}
+
 	const handleClick = () => {
 		if (entranceMiniZoomSpanVisible) {
 			finalizeExitSelection();
@@ -2897,6 +2912,9 @@
 						{/each}
 					</div>
 				</div>
+			</div>
+			<div>
+				<button onclick={setGoesToSelf}>Goes to self only</button>
 			</div>
 			<!-- 6 pixel border * 2 = 12 -->
 			<img
